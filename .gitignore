@@ -46,6 +46,9 @@ env/
 # === Data (DO NOT COMMIT - too large!) ===
 data/raw/
 data/processed/
+
+# === EXCEPT: Small packaged datasets ===
+!data/synthetic_brain_mri_small.zip
 *.nii
 *.nii.gz
 *.dcm
