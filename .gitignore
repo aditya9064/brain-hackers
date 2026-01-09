@@ -1,0 +1,84 @@
+# Brain MRI Project - Git Ignore
+# ================================
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === Virtual Environments ===
+venv/
+ENV/
+env/
+.venv/
+.conda/
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.spyderproject
+.spyproject
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# === Data (DO NOT COMMIT - too large!) ===
+data/raw/
+data/processed/
+*.nii
+*.nii.gz
+*.dcm
+*.mgz
+*.mgh
+
+# === Model Checkpoints (large files) ===
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+*.onnx
+
+# === Logs ===
+logs/
+*.log
+tensorboard_logs/
+wandb/
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Secrets ===
+.env
+*.env
+secrets.yaml
+
+# === Temporary Files ===
+tmp/
+temp/
+*.tmp
+*.bak
+

@@ -1,0 +1,101 @@
+# Classification Configuration
+# ============================
+# Train a 3D CNN to classify brain MRI into CN / MCI / AD
+
+# === Data Settings ===
+data:
+  # Path to preprocessed NIfTI volumes
+  data_dir: "data/processed/classification"
+  
+  # CSV with columns: subject_id, diagnosis, age, sex, mmse, etc.
+  labels_csv: "data/raw/classification/labels.csv"
+  
+  # JSON file with train/val/test subject IDs
+  splits_json: "data/splits.json"
+  
+  # Target volume shape after preprocessing [D, H, W]
+  target_shape: [96, 112, 96]
+  
+  # Tabular features to use (set to null to disable)
+  # tabular_cols: ["age", "sex", "mmse"]
+  tabular_cols: null
+
+# === Model Settings ===
+model:
+  # Number of filters in first conv layer (doubles each block)
+  base_filters: 32
+  
+  # Dropout rate in classifier head
+  dropout_rate: 0.5
+  
+  # Number of output classes
+  num_classes: 3
+
+# === Training Settings ===
+training:
+  # Batch size (small for 3D volumes - memory intensive!)
+  batch_size: 4
+  
+  # Number of training epochs
+  num_epochs: 100
+  
+  # Learning rate
+  learning_rate: 0.0001
+  
+  # Weight decay (L2 regularization)
+  weight_decay: 0.01
+  
+  # Learning rate scheduler patience (epochs)
+  lr_patience: 10
+  
+  # Early stopping patience (epochs)
+  early_stopping_patience: 20
+  
+  # Use class weights to handle imbalance
+  use_class_weights: true
+  
+  # Number of dataloader workers
+  num_workers: 4
+
+# === Augmentation Settings ===
+augmentation:
+  # Probability of applying each augmentation
+  rotation_prob: 0.5
+  rotation_range: 10  # degrees
+  
+  intensity_shift_prob: 0.5
+  intensity_scale_range: [0.9, 1.1]
+  intensity_offset_range: [-0.1, 0.1]
+  
+  noise_prob: 0.3
+  noise_std_range: [0.0, 0.03]
+  
+  gamma_prob: 0.3
+  gamma_range: [0.9, 1.1]
+
+# === Checkpoint Settings ===
+checkpoints:
+  # Directory to save checkpoints
+  save_dir: "checkpoints/classification"
+  
+  # Save checkpoint every N epochs
+  save_every: 10
+  
+  # Keep only the best N checkpoints
+  keep_best: 3
+
+# === Logging Settings ===
+logging:
+  # Log directory for TensorBoard
+  log_dir: "logs/classification"
+  
+  # Log metrics every N batches
+  log_every: 10
+  
+  # Use Weights & Biases (set to false if not using)
+  use_wandb: false
+  wandb_project: "brain-mri-classification"
+
+# === Reproducibility ===
+seed: 42
+

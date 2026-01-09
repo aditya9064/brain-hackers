@@ -1,0 +1,84 @@
+# Preprocessing Configuration
+# ===========================
+# Settings for preprocessing raw MRI volumes
+
+# === Input/Output Paths ===
+paths:
+  # Classification data
+  classification:
+    input_dir: "data/raw/classification/images"
+    output_dir: "data/processed/classification"
+    labels_csv: "data/raw/classification/labels.csv"
+  
+  # Segmentation data  
+  segmentation:
+    input_image_dir: "data/raw/segmentation/flair"
+    input_mask_dir: "data/raw/segmentation/masks"
+    input_t1_dir: "data/raw/segmentation/t1"  # Optional
+    output_image_dir: "data/processed/segmentation/images"
+    output_mask_dir: "data/processed/segmentation/masks"
+
+# === Resampling Settings ===
+resampling:
+  # Target voxel spacing in mm (isotropic recommended)
+  target_spacing: [2.0, 2.0, 2.0]
+  
+  # Interpolation order (1=linear for images, 0=nearest for masks)
+  image_interpolation_order: 1
+  mask_interpolation_order: 0
+
+# === Resize Settings ===
+resize:
+  # Final volume shape [D, H, W]
+  target_shape: [96, 112, 96]
+  
+  # Crop or pad to achieve target shape
+  mode: "crop_or_pad"
+
+# === Intensity Normalization ===
+normalization:
+  # Method: "zscore", "minmax", "percentile"
+  method: "zscore"
+  
+  # For percentile normalization
+  percentile_low: 1
+  percentile_high: 99
+  
+  # Clip extreme values
+  clip_values: true
+  clip_range: [-5.0, 5.0]  # For z-score normalized data
+
+# === Brain Extraction ===
+brain_extraction:
+  # Whether to apply brain extraction (skull stripping)
+  enabled: false
+  
+  # Method: "bet" (FSL), "synthstrip" (FreeSurfer), "hd-bet"
+  method: "synthstrip"
+  
+  # Only used if enabled=true
+  fractional_intensity: 0.5  # For BET
+
+# === Quality Control ===
+quality_control:
+  # Minimum acceptable brain volume (voxels)
+  min_brain_voxels: 10000
+  
+  # Check for NaN/Inf values
+  check_values: true
+  
+  # Save QC report
+  save_report: true
+  report_path: "data/preprocessing_report.csv"
+
+# === Processing Settings ===
+processing:
+  # Number of parallel workers
+  num_workers: 4
+  
+  # Overwrite existing processed files
+  overwrite: false
+  
+  # Continue on error (skip failed subjects)
+  continue_on_error: true
+

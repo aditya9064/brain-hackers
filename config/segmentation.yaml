@@ -1,0 +1,103 @@
+# Segmentation Configuration
+# ==========================
+# Train a 3D U-Net to segment white matter hyperintensities (WMH)
+
+# === Data Settings ===
+data:
+  # Path to preprocessed data
+  image_dir: "data/processed/segmentation/images"
+  mask_dir: "data/processed/segmentation/masks"
+  
+  # CSV with subject info (optional)
+  metadata_csv: "data/raw/segmentation/metadata.csv"
+  
+  # JSON file with train/val/test subject IDs
+  splits_json: "data/segmentation_splits.json"
+  
+  # Target volume shape after preprocessing [D, H, W]
+  target_shape: [96, 112, 96]
+  
+  # Input channels (1 for FLAIR only, 2 for FLAIR+T1)
+  in_channels: 1
+
+# === Model Settings ===
+model:
+  # Number of filters in first encoder layer
+  base_filters: 32
+  
+  # Number of encoder/decoder levels
+  num_levels: 4
+  
+  # Dropout rate
+  dropout_rate: 0.2
+  
+  # Use instance normalization instead of batch norm
+  use_instance_norm: false
+
+# === Training Settings ===
+training:
+  # Batch size
+  batch_size: 2
+  
+  # Number of training epochs
+  num_epochs: 150
+  
+  # Learning rate
+  learning_rate: 0.0001
+  
+  # Weight decay
+  weight_decay: 0.0001
+  
+  # Learning rate scheduler patience
+  lr_patience: 15
+  
+  # Early stopping patience
+  early_stopping_patience: 30
+  
+  # Number of dataloader workers
+  num_workers: 4
+
+# === Loss Settings ===
+loss:
+  # Loss type: "dice", "ce", "dice_ce"
+  type: "dice_ce"
+  
+  # Weight for Dice loss (if using dice_ce)
+  dice_weight: 1.0
+  
+  # Weight for CE loss (if using dice_ce)
+  ce_weight: 1.0
+  
+  # Smoothing factor for Dice loss (prevents division by zero)
+  dice_smooth: 1.0
+
+# === Augmentation Settings ===
+augmentation:
+  rotation_prob: 0.5
+  rotation_range: 15
+  
+  flip_prob: 0.0  # Disable left-right flip for brain!
+  
+  intensity_shift_prob: 0.5
+  intensity_scale_range: [0.9, 1.1]
+  
+  elastic_deform_prob: 0.3
+  elastic_sigma: 5.0
+  elastic_alpha: 100.0
+
+# === Checkpoint Settings ===
+checkpoints:
+  save_dir: "checkpoints/segmentation"
+  save_every: 10
+  keep_best: 3
+
+# === Logging Settings ===
+logging:
+  log_dir: "logs/segmentation"
+  log_every: 10
+  use_wandb: false
+  wandb_project: "brain-mri-segmentation"
+
+# === Reproducibility ===
+seed: 42
+
