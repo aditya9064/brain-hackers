@@ -95,37 +95,78 @@ This creates 30 synthetic brain volumes with labels for testing.
 
 ---
 
-## Option 3: WMH Segmentation Challenge (For Lesion Segmentation)
+## Option 3: WMH Segmentation Challenge (For Lesion Segmentation) ⭐ RECOMMENDED
 
-**What it is**: White Matter Hyperintensity challenge data
+**What it is**: White Matter Hyperintensity Segmentation Challenge data
 
-**Size**: 60 training subjects with manual segmentations
+**Size**: 8.2 GB (60 training subjects + 110 test subjects with manual segmentations)
 
-**Access Time**: Immediate after registration
+**Access Time**: Immediate - No registration required! 🎉
 
-### Steps
+**License**: CC-BY-NC-4.0 (free for non-commercial/research use)
 
-1. **Register**
-   - Go to: https://wmh.isi.uu.nl/
-   - Create account and accept terms
+**Source**: [DataverseNL](https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AECRSD)
 
-2. **Download**
-   - Download training data (FLAIR + T1 + masks)
-   - Multi-site data (Utrecht, Singapore, Amsterdam)
+### Option A: Automated Download (Recommended)
 
-3. **Organize**
+```bash
+# From project root
+source venv/bin/activate
+python scripts/fetch_data.py --dataset wmh-challenge
+```
+
+This will download and extract the full WMH Challenge dataset (~8.2 GB).
+
+### Option B: Manual Download
+
+1. **Direct Download**
+   - Go to: https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AECRSD
+   - Click "Download ZIP (8.2 GB)"
+   - Extract to `data/raw/segmentation/wmh_challenge/`
+
+2. **Dataset Contents**
+   - `training/` - 60 subjects from 3 sites (Amsterdam, Singapore, Utrecht)
+     - Each subject has: `pre/FLAIR.nii.gz`, `pre/T1.nii.gz`, `wmh.nii.gz` (manual mask)
+   - `test/` - 110 subjects with ground truth masks
+   - `additional_annotations/` - Extra observer annotations
+
+3. **Multi-site Data**
+   | Site | Scanner | # Training | # Test |
+   |------|---------|------------|--------|
+   | Amsterdam (GE 3T) | GE Signa | 20 | 30 |
+   | Singapore | Siemens 3T | 20 | 30 |
+   | Utrecht | Philips 3T | 20 | 50 |
+
+4. **Citation** (if you use this data):
    ```
-   data/raw/segmentation/
-   ├── flair/
-   │   ├── sub001_FLAIR.nii.gz
-   │   └── ...
-   ├── t1/
-   │   ├── sub001_T1.nii.gz
-   │   └── ...
-   └── masks/
-       ├── sub001_mask.nii.gz
-       └── ...
+   Kuijf, H.J., et al. "Standardized Assessment of Automatic Segmentation 
+   of White Matter Hyperintensities and Results of the WMH Segmentation 
+   Challenge." IEEE Trans Med Imaging, 38(11), 2556-2568, 2019.
+   DOI: 10.1109/TMI.2019.2905770
    ```
+
+### After Download
+
+Our scripts will automatically organize the data:
+
+```
+data/raw/segmentation/wmh_challenge/
+├── training/
+│   ├── Amsterdam/
+│   │   ├── GE3T/
+│   │   │   ├── 100/
+│   │   │   │   ├── pre/
+│   │   │   │   │   ├── FLAIR.nii.gz
+│   │   │   │   │   └── T1.nii.gz
+│   │   │   │   └── wmh.nii.gz  (ground truth mask)
+│   │   │   ├── 101/
+│   │   │   └── ...
+│   ├── Singapore/
+│   └── Utrecht/
+├── test/
+│   └── (same structure)
+└── additional_annotations/
+```
 
 ---
 

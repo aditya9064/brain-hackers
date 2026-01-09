@@ -50,6 +50,16 @@ DATASET_REGISTRY = {
         "size_mb": 100,
         "output_dir": "data/raw/oasis_sample",
     },
+    "wmh-challenge": {
+        "description": "WMH Segmentation Challenge - FLAIR + T1 + manual masks (60 training subjects)",
+        "local_zip": None,
+        # Direct download from DataverseNL (8.2 GB)
+        "url": "https://dataverse.nl/api/access/dataset/:persistentId/?persistentId=doi:10.34894/AECRSD",
+        "size_mb": 8200,
+        "output_dir": "data/raw/segmentation/wmh_challenge",
+        "license": "CC-BY-NC-4.0",
+        "citation": "Kuijf et al., 2022, doi:10.34894/AECRSD",
+    },
 }
 
 
